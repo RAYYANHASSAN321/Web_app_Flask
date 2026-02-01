@@ -7,7 +7,21 @@
     <link rel="stylesheet" href="{{url_for('static' , filename = 'css/bootstrap.min.css')}}">
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <script src="script.js"></script>
+    <div class="container col-6">
+        <h1>Todo App</h1>
+        <br>
+        <h3 class="text-center">Add Todo</h3>
+
+        <form action="/add" method="POST">
+            <label for="" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" id="">
+
+            <label for="" class="form-label">Description</label>
+            <input type="text" class="form-control" name="desc" id="">
+            <br>
+            <button class="btn btn-primary" value="Add" type="submit">Add Todo</button> 
+            <br>
+        </form>
+    </div>
 </body>
 </html>
