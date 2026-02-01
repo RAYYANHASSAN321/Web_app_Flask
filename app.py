@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Database setup  
 # client = MongoClient('mongodb://localhost:27017/') # local MongoDB server
-load_dotenv()  # .env load karega
+load_dotenv()  # .env loading
 
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = os.getenv("DB_NAME")
@@ -47,6 +47,23 @@ def add_todo():
         'desc': desc
         })
     return redirect(url_for('index'))
+
+@app.route("/submit-contact", methods=["POST"])
+def submit_contact():   
+    name = request.form.get("name")
+    email = request.form.get("email")
+    message = request.form.get("message")
+
+    todo_tbl.insert_one({
+        'name': name,
+        'email': email,
+        'message': message
+    })
+
+    # Here you can process the data, e.g., store it in the database or send an email
+    print(f"Received contact form submission: Name={name}, Email={email}, Message={message}")
+
+    return redirect(url_for('contact'))
 
 
 if __name__ == "__main__":

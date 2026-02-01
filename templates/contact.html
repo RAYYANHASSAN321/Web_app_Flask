@@ -3,138 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Elite Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Contact Us</title>
     <link rel="stylesheet" href="{{url_for('static' , filename = 'css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --primary-dark: #1a1a1a;
-            --accent-gold: #c5a059; /* Sophisticated gold */
-            --soft-white: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
         body {
+            background-color: #f8f9fa;
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f; /* Dark mode base for premium feel */
-            color: var(--soft-white);
-            margin: 0;
-            padding: 0;
-        }
-
-        .main-wrapper {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at top right, #2c2c2c, #0f0f0f);
-            padding: 40px 20px;
+            margin: 0;
         }
 
-        .premium-card {
-            max-width: 1200px;
-            width: 100%;
-            background: #1e1e1e;
-            border-radius: 30px;
+        .main-card {
+            background: #ffffff;
+            border-radius: 20px;
             overflow: hidden;
-            display: flex;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            min-height: 600px;
         }
 
-        /* Left Side: Brand & Info */
-        .info-panel {
-            flex: 1;
-            padding: 60px;
-            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+        /* Image Column */
+        .image-side {
+            background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80') center/cover;
             position: relative;
+            min-height: 400px;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-end;
+            color: white;
         }
 
-        .info-panel h1 {
-            font-weight: 700;
-            font-size: 3.5rem;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .info-panel p {
-            color: #888;
-            font-size: 1.1rem;
-            max-width: 400px;
-        }
-
-        .contact-detail {
-            margin-top: 50px;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            transition: var(--transition-smooth);
-        }
-
-        .detail-item:hover {
-            transform: translateX(10px);
-        }
-
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            background: var(--glass-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            color: var(--accent-gold);
-            font-size: 1.2rem;
-        }
-
-        .detail-text h5 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-gold);
-            margin: 0;
-        }
-
-        .detail-text p {
-            margin: 0;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        /* Right Side: Form */
-        .form-panel {
-            flex: 1.2;
+        /* Form Column */
+        .form-side {
             padding: 60px;
-            background: #ffffff;
-            color: #1a1a1a;
         }
 
-        .form-panel h2 {
-            font-weight: 700;
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
             margin-bottom: 10px;
-        }
-
-        .form-panel p.subtitle {
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
+            color: #1a1a1a;
         }
 
         .form-label {
@@ -142,159 +61,84 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #999;
+            color: #666;
+            margin-top: 15px;
         }
 
-        .form-control, .form-select {
+        .form-control {
             border: none;
             border-bottom: 2px solid #eee;
             border-radius: 0;
-            padding: 12px 0;
-            font-weight: 500;
-            transition: var(--transition-smooth);
-            background: transparent;
+            padding: 10px 0;
+            transition: all 0.3s ease;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus {
             box-shadow: none;
-            border-color: var(--accent-gold);
-            padding-left: 10px;
+            border-color: #000;
         }
 
         .btn-premium {
-            background: var(--primary-dark);
+            background: #1a1a1a;
             color: white;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-transform: uppercase;
+            border-radius: 0;
+            padding: 15px 30px;
             letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 30px;
             width: 100%;
-            margin-top: 20px;
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
         .btn-premium:hover {
-            background: var(--accent-gold);
-            color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(197, 160, 89, 0.3);
+            background: #333;
+            color: #fff;
+            transform: translateY(-2px);
         }
 
-        .social-link {
-            color: #444;
-            font-size: 1.2rem;
-            margin-right: 20px;
-            transition: var(--transition-smooth);
-        }
-
-        .social-link:hover {
-            color: var(--accent-gold);
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .premium-card {
-                flex-direction: column;
-            }
-            .info-panel {
-                padding: 40px;
-            }
-            .form-panel {
-                padding: 40px;
-            }
+        @media (max-width: 768px) {
+            .main-card { margin: 20px; }
+            .form-side { padding: 40px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="premium-card">
-            <div class="info-panel">
-                <div>
-                    <h1>Let's talk.</h1>
-                    <p>Experience the next level of service. Reach out to our concierge team for personalized assistance.</p>
-                    
-                    <div class="contact-detail">
-                        <div class="detail-item">
-                            <div class="icon-box"><i class="fas fa-envelope-open"></i></div>
-                            <div class="detail-text">
-                                <h5>Email Us</h5>
-                                <p>concierge@elite.com</p>
-                            </div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="icon-box"><i class="fas fa-phone-volume"></i></div>
-                            <div class="detail-text">
-                                <h5>Call Us</h5>
-                                <p>+1 (800) ELITE-VIP</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="social-box mt-4">
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+    <div class="container">
+        <div class="row main-card g-0">
+            <div class="col-md-6 d-none d-md-block image-side">
+                <div class="image-overlay">
+                    <p class="mb-0">Connect with us</p>
+                    <h2 class="display-5 fw-bold">Elevating Experiences</h2>
                 </div>
             </div>
 
-            <div class="form-panel">
-                <h2>Inquiry Form</h2>
-                <p class="subtitle">Please provide your details below.</p>
+            <div class="col-md-6 form-side">
+                <h1>Contact Us</h1>
+                <p class="text-muted mb-4">We'd love to hear from you. Send us a message below.</p>
 
-                <form id="contactForm">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" placeholder="John Doe" required>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control" placeholder="john@example.com" required>
-                        </div>
+                <form action="/submit-contact" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="John Doe" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">Subject of interest</label>
-                        <select class="form-select">
-                            <option>Private Consulting</option>
-                            <option>Partnership Inquiry</option>
-                            <option>Media & Press</option>
-                        </select>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" name="email" placeholder="john@example.com" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="form-label">Your Message</label>
-                        <textarea class="form-control" rows="4" placeholder="How can we help you?"></textarea>
+                        <textarea class="form-control" name="message" rows="4" placeholder="How can we help?" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-premium">
-                        Send Inquiry <i class="fas fa-arrow-right ms-2"></i>
-                    </button>
+                    <button class="btn btn-premium" type="submit">Send Message</button> 
                 </form>
             </div>
         </div>
     </div>
 
-    <script>
-        // Smooth form submission simulation
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('.btn-premium');
-            btn.innerHTML = 'Sending...';
-            btn.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                btn.innerHTML = 'Message Sent';
-                btn.style.background = '#7cb518';
-                alert('Thank you. An advisor will contact you shortly.');
-            }, 2000);
-        });
-    </script>
 </body>
 </html>
