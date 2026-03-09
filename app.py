@@ -16,8 +16,7 @@ DB_NAME = os.getenv("DB_NAME")
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 todo_tbl = db['todo_tbl']
-
-
+contact_tbl = db['contact_tbl']
 
 # @app.route("/")
 # def hello_world():
@@ -30,7 +29,9 @@ todo_tbl = db['todo_tbl']
 
 @app.route("/index")
 def index():
-    return render_template('index.html')
+    # fetch all data from database
+    todos = list(todo_tbl.find())
+    return render_template('index.html' , data = todos)
 
 
 
@@ -54,7 +55,7 @@ def submit_contact():
     email = request.form.get("email")
     message = request.form.get("message")
 
-    todo_tbl.insert_one({
+    contact_tbl.insert_one({
         'name': name,
         'email': email,
         'message': message
