@@ -72,6 +72,21 @@ def delete_todo(id):
     todo_tbl.delete_one({'_id': ObjectId(id)})
     return redirect(url_for('index'))
 
+#----------- update route -----------#
+@app.route("/update/<id>" , methods=["GET"])
+def update_form(id):
+    todo = todo_tbl.find_one({'_id': ObjectId(id)})
+    return render_template('update.html' , todo = todo)
+
+@app.route("/update/<id>" , methods=["POST"])
+def update_todo(id):
+    title = request.form.get('title')
+    desc = request.form.get('desc')
+    todo_tbl.update_one(
+        {'_id': ObjectId(id)} , 
+        {'$set': {'title': title , 'desc': desc}}
+        )
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":

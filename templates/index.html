@@ -4,55 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{url_for('static' , filename = 'css/bootstrap.min.css')}}">
+    <title>Professions - Todo App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 
 <body>
-    <div class="container col-6">
-        <h1>Todo App</h1>
-        <br>
-        <h3 class="text-center">Add Todo</h3>
+    <div class="container">
+        <header style="margin-bottom: 3rem; text-align: center;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Explore Professions</h1>
+            <p style="color: var(--text-muted);">Find the perfect path for your career journey</p>
+        </header>
 
-        <form action="/add" method="POST">
-            <label for="" class="form-label">Title</label>
-            <input type="text" class="form-control" name="title" id="">
+        <section class="form-section">
+            <h3 style="margin-bottom: 1.5rem; text-align: center;">Add New Todo</h3>
+            <div class="card-modern">
+                <form action="/add" method="POST">
+                    <div style="margin-bottom: 1rem;">
+                        <label class="form-label"
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Title</label>
+                        <input type="text" class="form-control-modern" name="title" placeholder="What needs to be done?"
+                            required>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="form-label"
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Description</label>
+                        <input type="text" class="form-control-modern" name="desc" placeholder="Add more details..."
+                            required>
+                    </div>
+                    <button class="btn-modern" type="submit">
+                        <i data-lucide="plus" style="width: 18px; height: 18px; margin-right: 8px;"></i>
+                        Add Task
+                    </button>
+                </form>
+            </div>
+        </section>
 
-            <label for="" class="form-label">Description</label>
-            <input type="text" class="form-control" name="desc" id="">
-            <br>
-            <button class="btn btn-primary" value="Add" type="submit">Add Todo</button>
-            <br>
-        </form>
+
 
         <br><br>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>S.NO</th>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in data %}
-                <tr>
-                    <td>{{loop.index}}</td>
-                    <td>{{d._id}}</td>
-                    <td>{{d.title}}</td>
-                    <td>{{d.desc}}</td>
-                    <td>
-                        <a href="/delete/{{d._id}}" class="btn btn-danger">delete</a>
-                        <a href="" class="btn btn-primary">update</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <h3 style="margin-bottom: 1.5rem;">Recent Tasks</h3>
+        <div style="overflow-x: auto;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in data %}
+                    <tr>
+                        <td style="font-weight: 600; color: var(--text-muted);">{{loop.index}}</td>
+                        <td>
+                            <div style="font-weight: 600;">{{d.title}}</div>
+                            <div class="badge-id">{{d._id}}</div>
+                        </td>
+                        <td style="color: var(--text-muted);">{{d.desc}}</td>
+                        <td style="text-align: right;">
+                            <div class="action-btns" style="justify-content: flex-end;">
+                                <a href="/update/{{d._id}}" class="btn-sm-modern btn-update">
+                                    <i data-lucide="edit-2"
+                                        style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i>
+                                </a>
+                                <a href="/delete/{{d._id}}" class="btn-sm-modern btn-delete">
+                                    <i data-lucide="trash-2"
+                                        style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

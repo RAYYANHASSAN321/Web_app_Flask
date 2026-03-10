@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task - Todo App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <style>
+        .mention-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .mention-card {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .mention-content {
+            flex-grow: 1;
+        }
+
+        .mention-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .username {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .timestamp {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .mention-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+            background: #eef2ff;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header style="margin-bottom: 3rem; text-align: center;">
+            <a href="/index"
+                style="text-decoration: none; color: var(--text-muted); font-size: 0.875rem; display: inline-flex; align-items: center; margin-bottom: 1rem;">
+                <i data-lucide="arrow-left" style="width: 16px; height: 16px; margin-right: 4px;"></i> Back to Home
+            </a>
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Update Mention</h1>
+            <p style="color: var(--text-muted);">Refine the details of your tracked activity</p>
+        </header>
+
+        <section class="form-section">
+            <div class="card-modern">
+                <form action="/update/{{todo._id}}" method="POST">
+                    <div style="margin-bottom: 1rem;">
+                        <label class="form-label"
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Profession/Activity</label>
+                        <input type="text" class="form-control-modern" name="title" value="{{todo.title}}" required>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="form-label"
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mention Message</label>
+                        <input type="text" class="form-control-modern" name="desc" value="{{todo.desc}}" required>
+                    </div>
+                    <button class="btn-modern" type="submit">
+                        <i data-lucide="save" style="width: 18px; height: 18px; margin-right: 8px;"></i>
+                        Save Changes
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <h3 style="margin-bottom: 1.5rem;">Live Feed Preview</h3>
+        <div class="mention-list">
+            <!-- Dynamic Preview Card -->
+            <div class="card-modern mention-card">
+                <div class="avatar">RH</div>
+                <div class="mention-content">
+                    <div class="mention-header">
+                        <span class="username">Rayyan Hassan</span>
+                        <span class="timestamp">Just now</span>
+                    </div>
+                    <div class="mention-text">
+                        Updated <span class="highlight">@{{todo.title}}</span>: {{todo.desc}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
