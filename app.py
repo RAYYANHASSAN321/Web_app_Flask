@@ -66,6 +66,13 @@ def submit_contact():
 
     return redirect(url_for('contact'))
 
+#----------- delete route -----------#
+@app.route("/delete/<id>")
+def delete_todo(id):
+    todo_tbl.delete_one({'_id': ObjectId(id)})
+    return redirect(url_for('index'))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
