@@ -3,6 +3,9 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
+import cloudinary
+import cloudinary.uploader
 
 app = Flask(__name__)
 
@@ -17,6 +20,14 @@ client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 todo_tbl = db['todo_tbl']
 contact_tbl = db['contact_tbl']
+users_tbl = db['users_tbl']
+
+# Cloudinary config
+cloudinary.config(
+    cloud_name="dtupm0mck",
+    api_key="142211981314583",
+    api_secret="V5yAg39l6qvqXOv7oYteyiJjiL4"
+)
 
 # @app.route("/")
 # def hello_world():
@@ -39,13 +50,51 @@ def index():
 def contact ():
     return render_template('contact.html')
 
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        hashed_password = generate_password_hash(password)
+        users_tbl.insert_one({
+            'name': name,
+            'email': email,
+            'password': hashed_password
+        })
+        return redirect(url_for('login'))
+    return render_template('signup.html')
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = users_tbl.find_one({'email': email})
+        if user and check_password_hash(user['password'], password):
+            return redirect(url_for('index'))
+        else:
+            return render_template('signin.html', error='Invalid credentials')
+    return render_template('signin.html')
+
+@app.route("/logout")
+def logout():
+    return redirect(url_for('login'))
+
 @app.route("/add" , methods = ['POST'])
 def add_todo():
     title = request.form.get('title')
     desc = request.form.get('desc')
+    image_url = None
+    if 'image' in request.files:
+        file = request.files['image']
+        if file and file.filename:
+            upload_result = cloudinary.uploader.upload(file)
+            image_url = upload_result['secure_url']
     todo_tbl.insert_one({
         'title': title , 
-        'desc': desc
+        'desc': desc,
+        'image_url': image_url
         })
     return redirect(url_for('index'))
 
@@ -82,9 +131,15 @@ def update_form(id):
 def update_todo(id):
     title = request.form.get('title')
     desc = request.form.get('desc')
+    update_data = {'title': title, 'desc': desc}
+    if 'image' in request.files:
+        file = request.files['image']
+        if file and file.filename:
+            upload_result = cloudinary.uploader.upload(file)
+            update_data['image_url'] = upload_result['secure_url']
     todo_tbl.update_one(
         {'_id': ObjectId(id)} , 
-        {'$set': {'title': title , 'desc': desc}}
+        {'$set': update_data}
         )
     return redirect(url_for('index'))
 

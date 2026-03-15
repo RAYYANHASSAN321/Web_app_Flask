@@ -90,16 +90,24 @@
 
         <section class="form-section">
             <div class="card-modern">
-                <form action="/update/{{todo._id}}" method="POST">
+                <form action="/update/{{todo._id}}" method="POST" enctype="multipart/form-data">
                     <div style="margin-bottom: 1rem;">
                         <label class="form-label"
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Profession/Activity</label>
                         <input type="text" class="form-control-modern" name="title" value="{{todo.title}}" required>
                     </div>
-                    <div style="margin-bottom: 1.5rem;">
+                    <div style="margin-bottom: 1rem;">
                         <label class="form-label"
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Mention Message</label>
                         <input type="text" class="form-control-modern" name="desc" value="{{todo.desc}}" required>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="form-label"
+                            style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Image (optional)</label>
+                        <input type="file" class="form-control-modern" name="image" accept="image/*">
+                        {% if todo.image_url %}
+                        <p>Current Image: <img src="{{todo.image_url}}" alt="Current Image" style="max-width: 100px; max-height: 100px;"></p>
+                        {% endif %}
                     </div>
                     <button class="btn-modern" type="submit">
                         <i data-lucide="save" style="width: 18px; height: 18px; margin-right: 8px;"></i>
